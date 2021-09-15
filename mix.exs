@@ -22,7 +22,6 @@ defmodule PrometheusEcsDiscovery.MixProject do
   defp deps do
     [
       {:ex_aws_ecs, "~> 0.1"},
-      {:ex_aws_ec2, "~> 2.0"},
       {:hammox, "~> 0.2", only: :test},
       {:httpoison, "~> 1.0"},
       {:jason, "~> 1.0"},

@@ -19,19 +19,20 @@ end
 defmodule PrometheusEcsDiscovery do
   require Logger
 
-  def config(http_client \\ HTTPoison) do
+  def config(config) do
     [
-      http_client: http_client,
+      http_client: HTTPoison,
       json_codec: Jason,
       access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
       secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
       region: System.get_env("AWS_REGION")
     ]
+    |> Keyword.merge(config)
   end
 
-  def prometheus_services(http_client \\ HTTPoison) do
+  def prometheus_services(config \\ []) do
     Application.ensure_all_started(:prometheus_ecs_discovery)
-    config = config(http_client)
+    config = config(config)
 
     with {:ok, %{"clusterArns" => cluster_arns}} <- ExAws.ECS.list_clusters() |> ExAws.request(config),
          {:ok, tasks} <- describe_tasks(cluster_arns, config),
@@ -77,6 +78,7 @@ defmodule PrometheusEcsDiscovery do
     else
       {:error, error} ->
         Logger.error(inspect(error))
+        {:error, error}
     end
   end
 
