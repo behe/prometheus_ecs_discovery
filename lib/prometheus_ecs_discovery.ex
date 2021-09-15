@@ -95,8 +95,8 @@ defmodule PrometheusEcsDiscovery do
     end)
   end
 
-  def disco(http_client \\ HTTPoison) do
-    with {:ok, services} <- prometheus_services(http_client) do
+  def disco do
+    with {:ok, services} <- prometheus_services() do
       filename = "ecs_file_sd.yml"
       Logger.warn("Writing #{length(services)} discovered exporters to #{filename}")
       File.write!(filename, to_yaml(services))
