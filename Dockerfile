@@ -12,7 +12,7 @@ RUN mix deps.get
 RUN MIX_ENV=prod mix release
 
 FROM alpine:$ALPINE AS app
-RUN apk --no-cache add ncurses-libs
+RUN apk --no-cache add openssl ncurses-libs ca-certificates libgcc libstdc++
 WORKDIR /
 COPY --from=builder /app/_build/prod/rel/prometheus_ecs_discovery /
 CMD /bin/prometheus_ecs_discovery start
