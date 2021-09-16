@@ -97,7 +97,7 @@ defmodule PrometheusEcsDiscovery do
 
   def disco do
     with {:ok, services} <- prometheus_services() do
-      filename = "ecs_file_sd.yml"
+      filename = System.get_env("ECS_FILE_SD_LOCATION", "ecs_file_sd.yml")
       Logger.warn("Writing #{length(services)} discovered exporters to #{filename}")
       File.write!(filename, to_yaml(services))
     end
