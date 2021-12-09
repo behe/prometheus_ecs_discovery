@@ -152,29 +152,4 @@ defmodule PrometheusEcsDiscovery do
       end
     end)
   end
-
-  # defp describe_container_instances(cluster, container_instances) do
-  #   %{
-  #     "Action" => "DescribeContainerInstances",
-  #     "containerInstances" => container_instances,
-  #     "cluster" => cluster
-  #   }
-  #   |> request()
-  # end
-
-  # defp request(%{"Action" => action} = params, opts \\ %{}) do
-  #   params = Map.merge(params, %{"Version" => "2014-11-13"})
-
-  #   ExAws.Operation.JSON.new(
-  #     :ecs,
-  #     %{
-  #       data: params,
-  #       headers: [
-  #         {"x-amz-target", "AmazonEC2ContainerServiceV20141113.#{action}"},
-  #         {"content-type", "application/x-amz-json-1.1"}
-  #       ]
-  #     }
-  #     |> Map.merge(opts)
-  #   )
-  # end
 end
